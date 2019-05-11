@@ -19,9 +19,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 val BrownCrustOreBlock: Block = object : Block(Material.ROCK) {
     init {
-        setUnlocalizedName("Brown Crust Ore")
+        setUnlocalizedName("BrownCrustOre")
         setRegistryName("Brown Crust Ore")
         setCreativeTab(CreativeTabs.MISC)
+        println("AAAAAAAAAAAAAAAAAA " + mod.modid)
     }
 }
 
