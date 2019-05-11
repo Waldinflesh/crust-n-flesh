@@ -1,4 +1,4 @@
-package mod.Block
+package mod.common.Block
 
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -20,9 +20,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 val BrownCrustOreBlock: Block = object : Block(Material.ROCK) {
     init {
         setUnlocalizedName("BrownCrustOre")
-        setRegistryName("Brown Crust Ore")
+        setRegistryName("BrownCrustOre")
         setCreativeTab(CreativeTabs.MISC)
-        println("AAAAAAAAAAAAAAAAAA " + mod.modid)
     }
 }
 

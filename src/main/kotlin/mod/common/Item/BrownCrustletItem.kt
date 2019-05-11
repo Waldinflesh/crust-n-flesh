@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 val brownCrustlet:Item = object:Item(){
     init{
-        unlocalizedName = "Brown crustlet"
-        registryName = ResourceLocation(modid, "brown_crustlet")
+        setUnlocalizedName("BrownCrustlet")
+        setRegistryName("BrownCrustlet")
         setCreativeTab(CreativeTabs.MISC)
     }
 
