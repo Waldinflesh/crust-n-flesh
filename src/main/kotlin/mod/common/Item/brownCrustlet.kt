@@ -1,6 +1,6 @@
-package crustnflesh.common.item
+package mod.common.Item
 
-import crustnflesh.modid
+import mod.modid
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
@@ -18,7 +18,7 @@ val brownCrustlet:Item = object:Item(){
 
 
 }
-@Mod.EventBusSubscriber(modid=modid)
+@Mod.EventBusSubscriber(modid= modid)
 object RegistryHandler{
     @JvmStatic
     @SubscribeEvent

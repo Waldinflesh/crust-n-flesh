@@ -1,4 +1,4 @@
-package crustnflesh
+package mod
 
 import net.minecraftforge.fml.common.Mod
 
