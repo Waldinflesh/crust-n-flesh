@@ -34,9 +34,6 @@ object RegistryHandler{
     @JvmStatic
     @SubscribeEvent
     fun registerModels(event: ModelRegistryEvent) {
-        // ModelLoader.setCustomModelResourceLocation(TutorialItem, 0, ModelResourceLocation(TutorialItem.registryName ?: return, "inventory"))
         ModelLoader.setCustomModelResourceLocation(brownCrustlet, 0, ModelResourceLocation("crustnflesh:browncrustlet", "inventory"))
     }
-
-
 }
