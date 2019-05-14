@@ -19,32 +19,9 @@ import net.minecraftforge.client.model.ModelLoader
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 
 val BrownCrustOreBlock: Block = object : Block(Material.ROCK) {
-
     init {
         setUnlocalizedName("BrownCrustOre")
         setRegistryName("browncrustore")
         setCreativeTab(CreativeTabs.MISC)
-    }
-}
-
-
-@Mod.EventBusSubscriber(modid = mod.modid)
-object RegistryHandler {
-    @JvmStatic
-    @SubscribeEvent
-    fun onBlockRegister(event: RegistryEvent.Register<Block>) {
-        event.registry.registerAll(BrownCrustOreBlock)
-    }
-
-    @JvmStatic
-    @SubscribeEvent
-    fun onItemRegister(event: RegistryEvent.Register<Item>) {
-        event.registry.registerAll(ItemBlock(BrownCrustOreBlock).setRegistryName(BrownCrustOreBlock.getRegistryName()));
-    }
-
-    @JvmStatic
-    @SubscribeEvent
-    fun registerModels(event: ModelRegistryEvent) {
-        ModelLoader.setCustomModelResourceLocation(ItemBlock(BrownCrustOreBlock).setRegistryName("browncrustore"), 0, ModelResourceLocation("crustnflesh:browncrustore", "inventory"))
     }
 }

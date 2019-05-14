@@ -14,26 +14,10 @@ import net.minecraftforge.client.event.ModelRegistryEvent
 
 
 
-
 val brownCrustlet:Item = object:Item(){
-    init{
+    init {
         setUnlocalizedName("BrownCrustlet")
         setRegistryName("browncrustlet")
         setCreativeTab(CreativeTabs.MISC)
-    }
-
-
-}
-@Mod.EventBusSubscriber(modid= modid)
-object RegistryHandler{
-    @JvmStatic
-    @SubscribeEvent
-    fun onItemRegister(event: RegistryEvent.Register<Item>){
-        event.getRegistry().register(brownCrustlet)
-    }
-    @JvmStatic
-    @SubscribeEvent
-    fun registerModels(event: ModelRegistryEvent) {
-        ModelLoader.setCustomModelResourceLocation(brownCrustlet, 0, ModelResourceLocation("crustnflesh:browncrustlet", "inventory"))
     }
 }
