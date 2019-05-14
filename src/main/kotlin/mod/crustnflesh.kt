@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 import mod.common.Item.*
 import mod.common.Block.*
+import mod.world.*
+import net.minecraftforge.fml.common.registry.GameRegistry
 
 
 const val modid = "crustnflesh"
@@ -26,9 +28,10 @@ const val version = "0.02F"
 @Mod(modid = modid, name = name, version = version, modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter", acceptedMinecraftVersions = "1.12.2")
 object CrustNFleshMod {
     @SidedProxy(serverSide = "mod.proxy.CommonProxy", clientSide="mod.proxy.ClientProxy")
-    lateinit var proxy: CommonProxy
+    lateinit var proxy:CommonProxy
     @Mod.EventHandler
-    fun preInit(event: FMLPreInitializationEvent) {
+    fun preInit(event:FMLPreInitializationEvent) {
+        GameRegistry.registerWorldGenerator(OreWorldGen, 3)
     }
 
 
