@@ -18,20 +18,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 
-import mod.common.Item.brownCrustlet
-
+import mod.common.Item.BrownCrustlet
+import mod.client.CrustTab
 
 val BrownCrustOreBlock: Block = object : Block(Material.ROCK) {
 
     //Drop values
     val minDropAmount = 4
     val maxDropAmount = 8
-    val toDrop = brownCrustlet
+    val toDrop = BrownCrustlet
 
     init {
         setUnlocalizedName("BrownCrustOre")
         setRegistryName("browncrustore")
-        setCreativeTab(CreativeTabs.MISC)
+        setCreativeTab(CrustTab)
 
         setHardness(1.5F)
     }

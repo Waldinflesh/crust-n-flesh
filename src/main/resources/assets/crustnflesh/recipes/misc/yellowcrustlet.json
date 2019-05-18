@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "crustnflesh:yellowcrustblock"
+    }
+  ],
+  "result": {
+    "item": "crustnflesh:yellowcrustlet",
+    "count": 9
+  }
+}

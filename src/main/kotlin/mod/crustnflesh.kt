@@ -46,9 +46,12 @@ object AutoRegistry {
     @JvmStatic
     @SubscribeEvent
     fun registerItems(event: RegistryEvent.Register<Item>) {
-            event.getRegistry().register(brownCrustlet)
-            event.getRegistry().register(ItemBlock(BrownCrustOreBlock).setRegistryName(BrownCrustOreBlock.getRegistryName()))
-            event.getRegistry().register(ItemBlock(CrustPoleBlock).setRegistryName(CrustPoleBlock.getRegistryName()))
+        event.getRegistry().register(BrownCrustlet)
+        event.getRegistry().register(YellowCrustlet)
+        event.getRegistry().register(ItemBlock(CrustPoleBlock).setRegistryName(CrustPoleBlock.getRegistryName()))
+        event.getRegistry().register(ItemBlock(BrownCrustOreBlock).setRegistryName(BrownCrustOreBlock.getRegistryName()))
+        event.getRegistry().register(ItemBlock(BrownCrustBlock).setRegistryName(BrownCrustBlock.getRegistryName()))
+        event.getRegistry().register(ItemBlock(YellowCrustBlock).setRegistryName(YellowCrustBlock.getRegistryName()))
     }
 
     @JvmStatic
@@ -57,13 +60,18 @@ object AutoRegistry {
         event.getRegistry().register(BrownCrustOreBlock)
         event.getRegistry().register(CrustPoleBlock)
         GameRegistry.registerTileEntity(TileEntityCrustPole::class.java, CrustPoleBlock.getRegistryName().toString());
+        event.getRegistry().register(BrownCrustBlock)
+        event.getRegistry().register(YellowCrustBlock)
     }
 
     @JvmStatic
     @SubscribeEvent
     fun registerModels(event: ModelRegistryEvent) {
-        CrustNFleshMod.proxy.registerItemRenderer(brownCrustlet, 0)
+        CrustNFleshMod.proxy.registerItemRenderer(BrownCrustlet, 0)
+        CrustNFleshMod.proxy.registerItemRenderer(YellowCrustlet, 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustOreBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(CrustPoleBlock), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustBlock), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(YellowCrustBlock), 0)
     }
 }
