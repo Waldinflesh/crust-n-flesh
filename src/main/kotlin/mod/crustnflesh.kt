@@ -47,6 +47,8 @@ object AutoRegistry {
     fun registerItems(event: RegistryEvent.Register<Item>) {
         event.getRegistry().register(BrownCrustlet)
         event.getRegistry().register(YellowCrustlet)
+        event.getRegistry().register(CrustyFleshlet)
+        event.getRegistry().register(FleshHook)
         event.getRegistry().register(ItemBlock(BrownCrustOreBlock).setRegistryName(BrownCrustOreBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(BrownCrustBlock).setRegistryName(BrownCrustBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(YellowCrustBlock).setRegistryName(YellowCrustBlock.getRegistryName()))
@@ -65,6 +67,8 @@ object AutoRegistry {
     fun registerModels(event: ModelRegistryEvent) {
         CrustNFleshMod.proxy.registerItemRenderer(BrownCrustlet, 0)
         CrustNFleshMod.proxy.registerItemRenderer(YellowCrustlet, 0)
+        CrustNFleshMod.proxy.registerItemRenderer(CrustyFleshlet,0)
+        CrustNFleshMod.proxy.registerItemRenderer(FleshHook,0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustOreBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(YellowCrustBlock), 0)
