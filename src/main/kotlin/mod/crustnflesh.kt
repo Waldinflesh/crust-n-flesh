@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
+
 import mod.common.Item.*
 import mod.common.Block.*
 import mod.world.*
@@ -47,6 +48,7 @@ object AutoRegistry {
     fun registerItems(event: RegistryEvent.Register<Item>) {
         event.getRegistry().register(BrownCrustlet)
         event.getRegistry().register(YellowCrustlet)
+        event.getRegistry().register(ItemBlock(CrustPoleBlock).setRegistryName(CrustPoleBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(BrownCrustOreBlock).setRegistryName(BrownCrustOreBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(BrownCrustBlock).setRegistryName(BrownCrustBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(YellowCrustBlock).setRegistryName(YellowCrustBlock.getRegistryName()))
@@ -56,6 +58,8 @@ object AutoRegistry {
     @SubscribeEvent
     fun registerBlocks(event: RegistryEvent.Register<Block>) {
         event.getRegistry().register(BrownCrustOreBlock)
+        event.getRegistry().register(CrustPoleBlock)
+        GameRegistry.registerTileEntity(TileEntityCrustPole::class.java, CrustPoleBlock.getRegistryName().toString());
         event.getRegistry().register(BrownCrustBlock)
         event.getRegistry().register(YellowCrustBlock)
     }
@@ -66,6 +70,7 @@ object AutoRegistry {
         CrustNFleshMod.proxy.registerItemRenderer(BrownCrustlet, 0)
         CrustNFleshMod.proxy.registerItemRenderer(YellowCrustlet, 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustOreBlock), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(CrustPoleBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(YellowCrustBlock), 0)
     }
