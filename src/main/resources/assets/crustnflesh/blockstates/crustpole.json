@@ -7,7 +7,7 @@
 		"growth=3": {"model": "crustnflesh:crustpole3"},
 		"growth=4": {"model": "crustnflesh:crustpole4"},
 		"inventory": {
-			"model": "tutorial:pedestal",
+			"model": "crustnflesh:crustpole0",
 			"transform": "forge:default-block"
 		}
 	}
