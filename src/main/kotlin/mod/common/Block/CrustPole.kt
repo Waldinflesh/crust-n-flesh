@@ -18,7 +18,12 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.Entity
 import net.minecraft.world.World
+import net.minecraft.block.properties.PropertyInteger
+import net.minecraft.block.state.BlockStateContainer
+import net.minecraft.block.properties.IProperty
 
+
+public lateinit var GrowthState: PropertyInteger
 val CrustPoleBlock: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.ROCK) {
 
     init {
@@ -32,18 +37,41 @@ val CrustPoleBlock: Block = object : BlockTileEntity<TileEntityCrustPole>(Materi
         if (!world.isRemote) {
             val tile = getTileEntity(world, pos)
             if(tile.count >= 100) {
+                tile.count = 0
                 val dropItem = EntityItem(world, player.posX, player.posY, player.posZ, ItemStack(brownCrustlet, 1))
                 world.spawnEntity(dropItem)
-                tile.count = 0
+                world.setBlockState(pos, world.getBlockState(pos).withProperty(GrowthState, 0))
                 tile.markDirty()
             }
         }
         return true
     }
 
+    override fun createBlockState(): BlockStateContainer {
+        GrowthState = PropertyInteger.create("growth", 0, 4)
+        return BlockStateContainer(this, GrowthState)
+    }
+
+    override fun getStateFromMeta(meta: Int): IBlockState {
+        var a = defaultState.withProperty(GrowthState, meta)
+        return a
+    }
+
+    override fun getMetaFromState(state: IBlockState?): Int {
+        var a = state!!.getValue(GrowthState)
+        return a
+    }
+
+
+
+    override fun isOpaqueCube(state: IBlockState): Boolean {
+        return false;
+    }
+
     override fun hasTileEntity(state: IBlockState): Boolean {
         return true
     }
+
 
     override fun createTileEntity(world: World, state: IBlockState): TileEntityCrustPole {
         return TileEntityCrustPole()
@@ -64,8 +92,32 @@ class TileEntityCrustPole : TileEntity(), ITickable {
         super.readFromNBT(compound)
     }
 
+    /*
+     * Don't reset the tile entity after the blockstate is changed
+     */
+    override fun shouldRefresh(world: World, pos: BlockPos, oldState: IBlockState, newState: IBlockState): Boolean {
+        return newState.getBlock() != oldState.getBlock()
+    }
+
     override fun update() {
-        count++
-        markDirty()
+        if (!world.isRemote) {
+            if (count >= 0 && count <= 20) {
+                world.setBlockState(pos, getWorld().getBlockState(pos).withProperty(GrowthState, 0))
+            }
+            if (count >= 20 && count <= 40) {
+                world.setBlockState(pos, getWorld().getBlockState(pos).withProperty(GrowthState, 1))
+            }
+            if (count >= 40 && count <= 80) {
+                world.setBlockState(pos, getWorld().getBlockState(pos).withProperty(GrowthState, 2))
+            }
+            if (count >= 80 && count <= 100) {
+                world.setBlockState(pos, getWorld().getBlockState(pos).withProperty(GrowthState, 3))
+            }
+            if (count >= 100) {
+                world.setBlockState(pos, getWorld().getBlockState(pos).withProperty(GrowthState, 4))
+            }
+            count++
+            markDirty()
+        }
     }
 }

@@ -1,16 +1,14 @@
 {
 	"forge_marker": 1,
-	"defaults": {
-		"textures": {
-			"all": "crustnflesh:blocks/browncrustore"
-		}
-	},
 	"variants": {
-		"normal": {
-			"model": "cube_all"
-		},
+		"growth=0": {"model": "crustnflesh:crustpole0"},
+		"growth=1": {"model": "crustnflesh:crustpole1"},
+		"growth=2": {"model": "crustnflesh:crustpole2"},
+		"growth=3": {"model": "crustnflesh:crustpole3"},
+		"growth=4": {"model": "crustnflesh:crustpole4"},
 		"inventory": {
-			"model": "cube_all"
+			"model": "tutorial:pedestal",
+			"transform": "forge:default-block"
 		}
 	}
 }
