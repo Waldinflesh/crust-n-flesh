@@ -4,7 +4,10 @@ tile.BrownCrustOre.name=Brown Crust Ore
 tile.BrownCrustBlock.name=Brown Crust Block
 tile.YellowCrustBlock.name=Yellow Crust Block
 
+tile.CrustPole.name=Crust Pole
+
 item.BrownCrustlet.name=Brown Crustlet
 item.YellowCrustlet.name=Yellow Crustlet
 item.CrustyFleshlet.name=Crusty Fleshlet
+
 item.FleshHook.name=Flesh Hook

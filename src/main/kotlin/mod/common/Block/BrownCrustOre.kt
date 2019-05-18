@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import mod.common.Item.BrownCrustlet
 import mod.client.CrustTab
 
-val BrownCrustOreBlock: Block = object : Block(Material.ROCK) {
+val BrownCrustOre: Block = object : Block(Material.ROCK) {
 
     //Drop values
     val minDropAmount = 4

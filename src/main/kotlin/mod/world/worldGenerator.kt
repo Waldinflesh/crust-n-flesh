@@ -20,7 +20,7 @@ object OreWorldGen:IWorldGenerator{
     }
 
     fun generateOverworld(random:Random, chunkX:Int, chunkZ:Int, world:World, chunkGenerator:IChunkGenerator, chunkProvider:IChunkProvider){
-        generateOre(BrownCrustOreBlock.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 3, 16, 4 + random.nextInt(4), 25)
+        generateOre(BrownCrustOre.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 3, 16, 4 + random.nextInt(4), 25)
     }
 
     fun generateOre(ore:IBlockState, world:World, random:Random, x:Int, z:Int, minY:Int, maxY:Int, size:Int, chancesPerChunk:Int){

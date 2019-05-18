@@ -1,36 +1,30 @@
 package mod.common.Block
 
 import mod.common.Item.*
-import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.item.ItemStack
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.Entity
 import net.minecraft.world.World
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
-import net.minecraft.block.properties.IProperty
-
+import mod.client.CrustTab
 
 public lateinit var GrowthState: PropertyInteger
-val CrustPoleBlock: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.ROCK) {
+val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.ROCK) {
 
     init {
-        setUnlocalizedName("Crust Pole")
+        setUnlocalizedName("CrustPole")
         setRegistryName("crustpole")
-        setCreativeTab(CreativeTabs.MISC)
-        setHardness(1.5F)
+        setCreativeTab(CrustTab)
     }
 
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -38,7 +32,7 @@ val CrustPoleBlock: Block = object : BlockTileEntity<TileEntityCrustPole>(Materi
             val tile = getTileEntity(world, pos)
             if(tile.count >= 100) {
                 tile.count = 0
-                val dropItem = EntityItem(world, player.posX, player.posY, player.posZ, ItemStack(BrownCrustlet, 1))
+                val dropItem = EntityItem(world, player.posX, player.posY, player.posZ, ItemStack(CrustyFleshlet, 1))
                 world.spawnEntity(dropItem)
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(GrowthState, 0))
                 tile.markDirty()
@@ -62,8 +56,6 @@ val CrustPoleBlock: Block = object : BlockTileEntity<TileEntityCrustPole>(Materi
         return a
     }
 
-
-
     override fun isOpaqueCube(state: IBlockState): Boolean {
         return false;
     }
@@ -71,7 +63,6 @@ val CrustPoleBlock: Block = object : BlockTileEntity<TileEntityCrustPole>(Materi
     override fun hasTileEntity(state: IBlockState): Boolean {
         return true
     }
-
 
     override fun createTileEntity(world: World, state: IBlockState): TileEntityCrustPole {
         return TileEntityCrustPole()
