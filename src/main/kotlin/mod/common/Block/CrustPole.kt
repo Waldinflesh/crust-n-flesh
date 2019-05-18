@@ -29,13 +29,19 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
 
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if (!world.isRemote) {
+
+            val equippedItem = player.getHeldItem(hand)
             val tile = getTileEntity(world, pos)
-            if(tile.count >= 100) {
+
+            if(tile.count >= 100 && equippedItem.getItem() == FleshHook) {
+
                 tile.count = 0
                 val dropItem = EntityItem(world, player.posX, player.posY, player.posZ, ItemStack(CrustyFleshlet, 1))
                 world.spawnEntity(dropItem)
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(GrowthState, 0))
                 tile.markDirty()
+
+                equippedItem.damageItem(1, player)
             }
         }
         return true
