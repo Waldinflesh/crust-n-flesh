@@ -1,0 +1,10 @@
+itemGroup.CrustTab=Crust n' Flesh
+
+tile.BrownCrustOre.name=Minerale Di Crosta Marrone
+tile.BrownCrustBlock.name=Blocco Di Crosta Marrone
+tile.YellowCrustBlock.name=Blocco Di Crosta Gialla
+
+item.BrownCrustlet.name=Crostino Marrone
+item.YellowCrustlet.name=Crostino Giallo
+item.CrustyFleshlet.name=Carnetto Incrostato
+item.FleshHook.name=Artiglio Per Carne

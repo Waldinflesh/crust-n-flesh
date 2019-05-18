@@ -46,9 +46,19 @@ object AutoRegistry {
     @JvmStatic
     @SubscribeEvent
     fun registerItems(event: RegistryEvent.Register<Item>) {
+
+        //items
         event.getRegistry().register(BrownCrustlet)
         event.getRegistry().register(YellowCrustlet)
+        event.getRegistry().register(CrustyFleshlet)
+
+        //tools
+        event.getRegistry().register(FleshHook)
+
+        //tile entities
         event.getRegistry().register(ItemBlock(CrustPoleBlock).setRegistryName(CrustPoleBlock.getRegistryName()))
+
+        //basic blocks
         event.getRegistry().register(ItemBlock(BrownCrustOreBlock).setRegistryName(BrownCrustOreBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(BrownCrustBlock).setRegistryName(BrownCrustBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(YellowCrustBlock).setRegistryName(YellowCrustBlock.getRegistryName()))
@@ -57,9 +67,12 @@ object AutoRegistry {
     @JvmStatic
     @SubscribeEvent
     fun registerBlocks(event: RegistryEvent.Register<Block>) {
-        event.getRegistry().register(BrownCrustOreBlock)
+        //tile entitites
         event.getRegistry().register(CrustPoleBlock)
         GameRegistry.registerTileEntity(TileEntityCrustPole::class.java, CrustPoleBlock.getRegistryName().toString());
+
+        //basic blocks
+        event.getRegistry().register(BrownCrustOreBlock)
         event.getRegistry().register(BrownCrustBlock)
         event.getRegistry().register(YellowCrustBlock)
     }
@@ -67,10 +80,18 @@ object AutoRegistry {
     @JvmStatic
     @SubscribeEvent
     fun registerModels(event: ModelRegistryEvent) {
+
+        //items
         CrustNFleshMod.proxy.registerItemRenderer(BrownCrustlet, 0)
         CrustNFleshMod.proxy.registerItemRenderer(YellowCrustlet, 0)
-        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustOreBlock), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(CrustyFleshlet,0)
+        CrustNFleshMod.proxy.registerItemRenderer(FleshHook,0)
+
+        //tile entities
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(CrustPoleBlock), 0)
+
+        //basic blocks
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustOreBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(BrownCrustBlock), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(YellowCrustBlock), 0)
     }
