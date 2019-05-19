@@ -8,5 +8,11 @@ object FleshHook:Item(){
         setUnlocalizedName("FleshHook")
         setRegistryName("fleshhook")
         setCreativeTab(CrustTab)
+        setMaxDamage(7)
+        setMaxStackSize(1)
+    }
+
+    override fun isDamageable() : Boolean{
+        return true
     }
 }
