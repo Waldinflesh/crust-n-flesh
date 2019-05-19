@@ -16,7 +16,9 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
+import net.minecraft.world.IBlockAccess
 import mod.client.CrustTab
+import net.minecraft.entity.EntityLivingBase
 
 public lateinit var GrowthState: PropertyInteger
 val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.ROCK) {
@@ -29,18 +31,18 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
 
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if (!world.isRemote) {
-
             val equippedItem = player.getHeldItem(hand)
             val tile = getTileEntity(world, pos)
-
             if(tile.count >= 100 && equippedItem.getItem() == FleshHook) {
-
                 tile.count = 0
+                tile.durability--
                 val dropItem = EntityItem(world, player.posX, player.posY, player.posZ, ItemStack(CrustyFleshlet, 1))
                 world.spawnEntity(dropItem)
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(GrowthState, 0))
                 tile.markDirty()
-
+                if(tile.durability <= 0) {
+                    world.destroyBlock(pos, false)
+                }
                 equippedItem.damageItem(1, player)
             }
         }
@@ -50,6 +52,46 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
     override fun createBlockState(): BlockStateContainer {
         GrowthState = PropertyInteger.create("growth", 0, 4)
         return BlockStateContainer(this, GrowthState)
+    }
+
+    /*
+     * Set the tile entity's data.
+     */
+    override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
+        if (stack.hasTagCompound() && stack!!.getTagCompound()!!.hasKey("Durability")) {
+            val tag = stack!!.getTagCompound()!!.getCompoundTag("Durability")
+            val tile = getTileEntity(worldIn, pos) as TileEntityCrustPole
+            tile!!.durability = stack!!.getTagCompound()!!.getInteger("Durability")
+        }
+    }
+
+
+    /*
+     * Delay tile entity deletion.
+     */
+    override fun removedByPlayer(state: IBlockState, world: World, pos: BlockPos, player: EntityPlayer, willHarvest: Boolean): Boolean {
+        if (willHarvest) {
+            return true
+        }
+        return super.removedByPlayer(state, world, pos, player, willHarvest)
+    }
+
+    /*
+     * Save data to the itemstack.
+     */
+    override fun getDrops(drops: net.minecraft.util.NonNullList<ItemStack>, world: IBlockAccess, pos: BlockPos, state: IBlockState, fortune: Int) {
+        val te = getTileEntity(world, pos)
+        var ret = ItemStack(this, 1, 0)
+        var nbt = NBTTagCompound()
+        nbt.setInteger("Durability", te.durability)
+        ret.setTagCompound(nbt)
+        drops.add(ret)
+    }
+
+    override fun harvestBlock(world: World, player: EntityPlayer, pos: BlockPos, state: IBlockState, te: TileEntity?, stack: ItemStack) {
+        super.harvestBlock(world, player, pos, state, te, stack)
+        world.setBlockToAir(pos)
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
@@ -78,14 +120,17 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
 
 class TileEntityCrustPole : TileEntity(), ITickable {
     var count: Int = 0
+    var durability = 7
 
     override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
         compound.setInteger("count", count)
+        compound.setInteger("durability", durability)
         return super.writeToNBT(compound)
     }
 
     override fun readFromNBT(compound: NBTTagCompound) {
         count = compound.getInteger("count")
+        compound.getInteger("durability")
         super.readFromNBT(compound)
     }
 
@@ -97,6 +142,9 @@ class TileEntityCrustPole : TileEntity(), ITickable {
     }
 
     override fun update() {
+        if(durability <= 0) {
+            return
+        }
         if (!world.isRemote) {
             if (count >= 0 && count <= 20) {
                 world.setBlockState(pos, getWorld().getBlockState(pos).withProperty(GrowthState, 0))
