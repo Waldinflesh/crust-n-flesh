@@ -62,6 +62,8 @@ object AutoRegistry {
         event.getRegistry().register(ItemBlock(BrownCrustOre).setRegistryName(BrownCrustOre.getRegistryName()))
         event.getRegistry().register(ItemBlock(BrownCrustBlock).setRegistryName(BrownCrustBlock.getRegistryName()))
         event.getRegistry().register(ItemBlock(YellowCrustBlock).setRegistryName(YellowCrustBlock.getRegistryName()))
+        event.getRegistry().register(ItemBlock(DualityPipe).setRegistryName(DualityPipe.getRegistryName()))
+        event.getRegistry().register(ItemBlock(NetController).setRegistryName(NetController.getRegistryName()))
     }
 
     @JvmStatic
@@ -71,11 +73,14 @@ object AutoRegistry {
         //tile entitites
         event.getRegistry().register(CrustPole)
         GameRegistry.registerTileEntity(TileEntityCrustPole::class.java, CrustPole.getRegistryName().toString());
+        GameRegistry.registerTileEntity(TileEntityNetController::class.java, CrustPole.getRegistryName().toString());
 
         //basic blocks
         event.getRegistry().register(BrownCrustOre)
         event.getRegistry().register(BrownCrustBlock)
         event.getRegistry().register(YellowCrustBlock)
+        event.getRegistry().register(DualityPipe)
+        event.getRegistry().register(NetController)
     }
 
     @JvmStatic
