@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.material.Material
 import mod.client.CrustTab
+import mod.common.energy.DualityMachine
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -35,26 +36,33 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
     override fun createTileEntity(world: World, state: IBlockState): TileEntityNetController {
         return TileEntityNetController()
     }
-}
+    }
 
+/*
+ * TODO: Add function to get the full spectrum of energy on the network.
+ */
 class TileEntityNetController : TileEntity() {
-   var pipeCount = -1
+    var machineList: MutableList<BlockPos> = arrayListOf()
 
     override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
-        compound.setInteger("pipeCount", pipeCount)
+        var x = 0
+        for (machine in machineList) {
+            compound.setLong("machine" + x, machine.toLong())
+            x++
+        }
         return super.writeToNBT(compound)
     }
 
     override fun readFromNBT(compound: NBTTagCompound) {
-        pipeCount = compound.getInteger("pipeCount")
+        var x = 0
+        while(true) {
+            if(compound.hasKey("machine" + x)) {
+                var pos = BlockPos.fromLong(compound.getLong("machine" + x))
+                machineList.add(pos)
+            } else {
+                break
+            }
+        }
         super.readFromNBT(compound)
-    }
-
-    /*
-     * A pipe has been added to the network, scan for machines.
-     */
-    fun notifyAdded(pos: BlockPos) {
-        pipeCount++;
-        markDirty();
     }
 }
