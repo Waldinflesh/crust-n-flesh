@@ -35,20 +35,23 @@ object DualityPipe : Block(Material.IRON){
      * Notify controller of the new pipe.
      */
     override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
-        var x = pos.getX()
-        var y = pos.getY()
-        var z = pos.getZ()
+    }
+
+
+    /*
+     * Trigger a network rescan.
+     */
+    override fun removedByPlayer(state: IBlockState, worldIn: World, pos: BlockPos, placer: EntityPlayer, willHarvest: Boolean): Boolean {
         var block = worldIn.getBlockState(pos).getBlock()
         /*
          * find controller
          */
         var adjController = findBlockAdjacent(worldIn, pos, NetController::class.java)
         if(!adjController.isEmpty()) {
-            for(i in 1..1000) {
-               println("AAAAAAAAAAAA")
-            }
-            return
+            var controller = worldIn.getTileEntity(adjController[0]) as TileEntityNetController
+            controller.rescan(
+            )
+            return true
         }
         /*
          * look for controller connected to pipes
@@ -63,10 +66,9 @@ object DualityPipe : Block(Material.IRON){
                 for (pipe2 in adjPipes) {
                     var adjController = findBlockAdjacent(worldIn, pipe2!!, NetController::class.java)
                     if (!adjController.isEmpty()) {
-                        for (i in 1..1000) {
-                            println("Found")
-                            break@loop
-                        }
+                        var controller = worldIn.getTileEntity(adjController[0]) as TileEntityNetController
+                        controller.rescan()
+                        break@loop
                     } else {
                         if(pipes.find { a -> pipe2 == a} == null) {
                             pipes.add(pipe2)
@@ -77,16 +79,6 @@ object DualityPipe : Block(Material.IRON){
             }
             i++
         }
-    }
-
-
-    /*
-     * Notify controller of the pipe's destruction.
-     */
-    override fun removedByPlayer(state: IBlockState, world: World, pos: BlockPos, player: EntityPlayer, willHarvest: Boolean): Boolean {
-        if (willHarvest) {
-            return true
-        }
-        return super.removedByPlayer(state, world, pos, player, willHarvest)
+        return super.removedByPlayer(state, worldIn, pos, placer, willHarvest)
     }
 }

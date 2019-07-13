@@ -18,6 +18,7 @@ import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.world.IBlockAccess
 import net.minecraft.block.state.IBlockState;
+import mod.common.energy.DualityGenerator
 
 val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Material.IRON) {
 
@@ -64,5 +65,54 @@ class TileEntityNetController : TileEntity() {
             }
         }
         super.readFromNBT(compound)
+    }
+
+    fun addMachine(pos: BlockPos) {
+        machineList.add(pos)
+        markDirty()
+    }
+
+    fun rescan() {
+        var pos = getPos()
+        var worldIn = getWorld()
+        var x = pos.getX()
+        var y = pos.getY()
+        var z = pos.getZ()
+        var block = worldIn.getBlockState(pos).getBlock()
+        /*
+         * find generators
+         */
+        var adjGenerators = findBlockAdjacent(worldIn, pos, DualityGenerator::class.java)
+        if(!adjGenerators.isEmpty()) {
+            for(gen in adjGenerators) {
+                machineList.add(gen)
+            }
+        }
+        /*
+         * look for generators connected to pipes
+         */
+        var pipes = mutableListOf<BlockPos>(pos)
+        var len = pipes.size
+        var i = 0
+        loop@ while(i < len) {
+            var pipe = pipes.get(i)
+            var adjPipes = findBlockAdjacent(worldIn, pipe, DualityPipe::class.java)
+            if (!adjPipes.isEmpty()) {
+                for (pipe2 in adjPipes) {
+                    var adjGenerators = findBlockAdjacent(worldIn, pipe2!!, DualityGenerator::class.java)
+                    if (!adjGenerators.isEmpty()) {
+                        for(gen in adjGenerators) {
+                            machineList.add(gen)
+                        }
+                    } else {
+                        if(pipes.find { a -> pipe2 == a} == null) {
+                            pipes.add(pipe2)
+                            len++
+                        }
+                    }
+                }
+            }
+            i++
+        }
     }
 }

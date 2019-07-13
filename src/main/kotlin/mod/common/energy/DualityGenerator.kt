@@ -21,11 +21,7 @@ import mod.client.CrustTab
 import net.minecraft.entity.EntityLivingBase
 import mod.common.Block.*
 
-/*
- * TODO: Implement common machine functions.
- */
-class DualityMachine constructor(buffer: Int, allocatedRange: IntRange, material: Material) : Block(material) {
-    var controllerCache: BlockPos? = null
+class DualityGenerator constructor(buffer: Int, allocatedRange: IntRange, material: Material) : Block(material) {
     /*
      * Notify controller of the new pipe.
      */
@@ -37,7 +33,9 @@ class DualityMachine constructor(buffer: Int, allocatedRange: IntRange, material
          */
         var adjController = findBlockAdjacent(worldIn, pos, NetController::class.java)
         if(!adjController.isEmpty()) {
-            controllerCache = adjController[0]
+            var controller = worldIn.getTileEntity(adjController[0]) as TileEntityNetController
+            controller.addMachine(pos)
+            return
         }
         /*
          * look for controller connected to pipes
@@ -52,7 +50,8 @@ class DualityMachine constructor(buffer: Int, allocatedRange: IntRange, material
                 for (pipe2 in adjPipes) {
                     var adjController = findBlockAdjacent(worldIn, pipe2!!, NetController::class.java)
                     if (!adjController.isEmpty()) {
-                        controllerCache = adjController[0]
+                        var controller = worldIn.getTileEntity(adjController[0]) as TileEntityNetController
+                        controller.addMachine(pos)
                         break@loop
                     } else {
                         if(pipes.find { a -> pipe2 == a} == null) {
