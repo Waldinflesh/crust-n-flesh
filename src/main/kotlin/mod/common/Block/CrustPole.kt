@@ -29,6 +29,15 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
         setCreativeTab(CrustTab)
     }
 
+    override fun getBoundingBox(state:IBlockState, source:IBlockAccess, pos:BlockPos):AxisAlignedBB{
+        return AxisAlignedBB(0.375, 0.0, 0.375, 0.625, 0.95, 0.625)
+    }
+
+    override fun addCollisionBoxToList(p_addCollisionBoxToList_1_: IBlockState, world: World, pos: BlockPos, p_addCollisionBoxToList_4_: AxisAlignedBB, p_addCollisionBoxToList_5_: MutableList<AxisAlignedBB>, p_addCollisionBoxToList_6_: Entity?, p_addCollisionBoxToList_7_: Boolean) {
+        val aabb = AxisAlignedBB(0.375, 0.0, 0.375, 0.625, 0.95, 0.625)
+        Block.addCollisionBoxToList(pos, )
+    }
+
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if (!world.isRemote) {
             val equippedItem = player.getHeldItem(hand)

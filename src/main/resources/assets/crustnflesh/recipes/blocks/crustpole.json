@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "SCS",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "crustnflesh:browncrustlet"
+    }
+  },
+  "result": {
+    "item": "crustnflesh:crustpole"
+  }
+}
