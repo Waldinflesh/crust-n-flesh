@@ -19,6 +19,8 @@ import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.world.IBlockAccess
 import mod.client.CrustTab
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.Entity
+import net.minecraft.util.math.AxisAlignedBB
 
 public lateinit var GrowthState: PropertyInteger
 val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.ROCK) {
@@ -35,7 +37,7 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
 
     override fun addCollisionBoxToList(p_addCollisionBoxToList_1_: IBlockState, world: World, pos: BlockPos, p_addCollisionBoxToList_4_: AxisAlignedBB, p_addCollisionBoxToList_5_: MutableList<AxisAlignedBB>, p_addCollisionBoxToList_6_: Entity?, p_addCollisionBoxToList_7_: Boolean) {
         val aabb = AxisAlignedBB(0.375, 0.0, 0.375, 0.625, 0.95, 0.625)
-        Block.addCollisionBoxToList(pos, )
+        Block.addCollisionBoxToList(pos, p_addCollisionBoxToList_4_, p_addCollisionBoxToList_5_, aabb)
     }
 
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
