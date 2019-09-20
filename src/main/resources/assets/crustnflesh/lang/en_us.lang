@@ -5,6 +5,7 @@ tile.BrownCrustBlock.name=Brown Crust Block
 tile.YellowCrustBlock.name=Yellow Crust Block
 
 tile.CrustPole.name=Crust Pole
+tile.NetController.name=Net Controller
 
 item.BrownCrustlet.name=Brown Crustlet
 item.YellowCrustlet.name=Yellow Crustlet

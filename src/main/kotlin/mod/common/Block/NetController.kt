@@ -1,5 +1,7 @@
 package mod.common.Block
 
+import mod.CrustNFleshMod
+import mod.ModGuiHandler
 import net.minecraft.block.Block
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.material.Material
@@ -19,6 +21,9 @@ import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.world.IBlockAccess
 import net.minecraft.block.state.IBlockState;
 import mod.common.energy.DualityGenerator
+import net.minecraft.util.text.TextComponentString
+import net.minecraftforge.items.CapabilityItemHandler
+import net.minecraftforge.items.IItemHandler
 
 val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Material.IRON) {
 
@@ -37,7 +42,18 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
     override fun createTileEntity(world: World, state: IBlockState): TileEntityNetController {
         return TileEntityNetController()
     }
+
+    override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+        if(!world.isRemote){
+
+            if(!player.isSneaking){
+                player.openGui(CrustNFleshMod, ModGuiHandler.NETCONTROLLER, world, pos.x, pos.y, pos.z)
+            }
+        }
+
+        return true
     }
+}
 
 /*
  * TODO: Add function to get the full spectrum of energy on the network.

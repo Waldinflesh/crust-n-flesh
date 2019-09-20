@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import mod.common.Item.*
 import mod.common.Block.*
 import mod.world.*
+import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.registry.GameRegistry
 
 
@@ -33,6 +34,7 @@ object CrustNFleshMod {
     @Mod.EventHandler
     fun preInit(event:FMLPreInitializationEvent) {
         GameRegistry.registerWorldGenerator(OreWorldGen, 3)
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, ModGuiHandler)
     }
 
 
