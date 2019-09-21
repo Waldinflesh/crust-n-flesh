@@ -21,7 +21,7 @@ import mod.client.CrustTab
 import net.minecraft.entity.EntityLivingBase
 import mod.common.Block.*
 
-class DualityGenerator constructor(buffer: Int, allocatedRange: IntRange, material: Material) : Block(material) {
+open class DualityGenerator constructor(buffer: Int, allocatedRange: IntRange, material: Material) : Block(material) {
     /*
      * Notify controller of the new pipe.
      */

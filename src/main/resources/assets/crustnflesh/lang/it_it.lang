@@ -6,6 +6,9 @@ tile.YellowCrustBlock.name=Blocco Di Crosta Gialla
 
 tile.CrustPole.name=Palo Di Crosta
 tile.NetController.name=Controllore Di Rete
+tile.DualityPipe.name=Tubo Per Dualità
+
+tile.CreativeGenerator.name=Generatore Creativo
 
 item.BrownCrustlet.name=Crostino Marrone
 item.YellowCrustlet.name=Crostino Giallo

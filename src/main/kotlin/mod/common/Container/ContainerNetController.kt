@@ -13,7 +13,10 @@ import net.minecraftforge.items.SlotItemHandler
 
 class ContainerNetController(playerInv:InventoryPlayer, netController: TileEntityNetController): Container(){
 
+    var netController: TileEntityNetController
+
     init {
+        this.netController = netController
         val inventory = netController.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH)
 
         //initializing inventory slots
