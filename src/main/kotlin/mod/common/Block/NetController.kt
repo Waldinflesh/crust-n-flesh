@@ -88,10 +88,9 @@ class TileEntityNetController : TileEntity() {
         markDirty()
     }
 
+
     fun rescan() {
-
-        machineList.clear()
-
+        machineList = arrayListOf()
         var pos = getPos()
         var worldIn = getWorld()
         var x = pos.getX()
@@ -102,8 +101,8 @@ class TileEntityNetController : TileEntity() {
          * find generators
          */
         var adjGenerators = findBlockAdjacent(worldIn, pos, DualityGenerator::class.java)
-        if(!adjGenerators.isEmpty()) {
-            for(gen in adjGenerators) {
+        if (!adjGenerators.isEmpty()) {
+            for (gen in adjGenerators) {
                 machineList.add(gen)
             }
         }
@@ -113,18 +112,24 @@ class TileEntityNetController : TileEntity() {
         var pipes = mutableListOf<BlockPos>(pos)
         var len = pipes.size
         var i = 0
-        loop@ while(i < len) {
+        loop@ while (i < len) {
             var pipe = pipes.get(i)
             var adjPipes = findBlockAdjacent(worldIn, pipe, DualityPipe::class.java)
             if (!adjPipes.isEmpty()) {
                 for (pipe2 in adjPipes) {
                     var adjGenerators = findBlockAdjacent(worldIn, pipe2!!, DualityGenerator::class.java)
                     if (!adjGenerators.isEmpty()) {
-                        for(gen in adjGenerators) {
-                            machineList.add(gen)
+                        for (gen in adjGenerators) {
+                            if (machineList.find { a -> gen == a } == null) {
+                                machineList.add(gen)
+                            }
                         }
-                    }else {
-                        if(pipes.find { a -> pipe2 == a} == null) {
+                        if (pipes.find { a -> pipe2 == a } == null) {
+                            pipes.add(pipe2)
+                            len++
+                        }
+                    } else {
+                        if (pipes.find { a -> pipe2 == a } == null) {
                             pipes.add(pipe2)
                             len++
                         }
