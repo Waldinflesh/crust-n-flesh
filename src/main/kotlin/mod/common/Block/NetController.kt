@@ -29,7 +29,7 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
 
     init{
         setUnlocalizedName("NetController")
-        setRegistryName("networkcontroller")
+        setRegistryName("netcontroller")
         setCreativeTab(CrustTab)
 
         setHardness(1.5F)
@@ -89,6 +89,9 @@ class TileEntityNetController : TileEntity() {
     }
 
     fun rescan() {
+
+        machineList.clear()
+
         var pos = getPos()
         var worldIn = getWorld()
         var x = pos.getX()
@@ -120,7 +123,7 @@ class TileEntityNetController : TileEntity() {
                         for(gen in adjGenerators) {
                             machineList.add(gen)
                         }
-                    } else {
+                    }else {
                         if(pipes.find { a -> pipe2 == a} == null) {
                             pipes.add(pipe2)
                             len++

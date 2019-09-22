@@ -24,7 +24,7 @@ import mod.common.Block.*
 /*
  * TODO: Implement common machine functions.
  */
-class DualityMachine constructor(buffer: Int, allocatedRange: IntRange, material: Material) : Block(material) {
+open class DualityMachine constructor(buffer: Int, allocatedRange: IntRange, material: Material) : Block(material) {
     var controllerCache: BlockPos? = null
     /*
      * Notify controller of the new pipe.

@@ -107,5 +107,8 @@ object AutoRegistry {
 
         //tile entities
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(CrustPole), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(NetController), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(CreativeGenerator), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(DualityPipe), 0)
     }
 }
