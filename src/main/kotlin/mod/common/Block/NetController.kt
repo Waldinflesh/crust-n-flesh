@@ -59,6 +59,7 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
  * TODO: Add function to get the full spectrum of energy on the network.
  */
 class TileEntityNetController : TileEntity() {
+
     var machineList: MutableList<BlockPos> = arrayListOf()
 
     override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
@@ -76,6 +77,7 @@ class TileEntityNetController : TileEntity() {
             if(compound.hasKey("machine" + x)) {
                 var pos = BlockPos.fromLong(compound.getLong("machine" + x))
                 machineList.add(pos)
+                x++
             } else {
                 break
             }

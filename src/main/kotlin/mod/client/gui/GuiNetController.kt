@@ -7,6 +7,7 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
 
 import mod.common.Container.ContainerNetController
+import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.resources.I18n
 import net.minecraft.util.text.TextComponentString
@@ -17,8 +18,6 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
     var playerInv: InventoryPlayer
     var container: ContainerNetController
     val BG_TEXTURE: ResourceLocation = ResourceLocation(mod.modid, "textures/gui/netcontroller.png")
-
-    //GUI center
 
     //GUI Buttons
     val RESCAN = 0
@@ -64,7 +63,6 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
         if(button.id == RESCAN){
             playerInv.player.sendMessage(TextComponentString("Rescanning network..."))
             this.container.netController.rescan()
-
             playerInv.player.sendMessage(TextComponentString("Elements found: " + container.netController.machineList.size))
         }
     }
