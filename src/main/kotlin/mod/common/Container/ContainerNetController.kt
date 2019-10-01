@@ -22,12 +22,12 @@ class ContainerNetController(playerInv:InventoryPlayer, netController: TileEntit
         //initializing inventory slots
         for (i in 0..2) {
             for (j in 0..8) {
-                addSlotToContainer(Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18))
+                addSlotToContainer(Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 117 + i * 18)) //original 84
             }
         }
 
         for (i in 0..8) {
-            addSlotToContainer(Slot(playerInv, i, 8 + i * 18, 142))
+            addSlotToContainer(Slot(playerInv, i, 8 + i * 18, 175)) //original 142
         }
     }
 
