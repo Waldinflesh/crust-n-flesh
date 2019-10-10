@@ -6,6 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.material.Material
 import mod.client.CrustTab
+import mod.client.gui.GuiNetController
 import mod.common.energy.DualityMachine
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing;
@@ -21,9 +22,18 @@ import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.world.IBlockAccess
 import net.minecraft.block.state.IBlockState;
 import mod.common.energy.DualityGenerator
+import mod.modid
+import net.minecraft.client.Minecraft
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TextComponentString
 import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.IItemHandler
+import java.awt.image.BufferedImage
+import java.io.InputStream
+import java.nio.ByteBuffer
+import javax.imageio.ImageIO
+import kotlin.math.cos
+import kotlin.math.sin
 
 val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Material.IRON) {
 
@@ -31,8 +41,8 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
         setUnlocalizedName("NetController")
         setRegistryName("netcontroller")
         setCreativeTab(CrustTab)
-
         setHardness(1.5F)
+
     }
 
     override fun hasTileEntity(state: IBlockState): Boolean {
@@ -55,9 +65,7 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
     }
 }
 
-/*
- * TODO: Add function to get the full spectrum of energy on the network.
- */
+
 class TileEntityNetController : TileEntity() {
 
     var machineList: MutableList<BlockPos> = arrayListOf()
@@ -141,4 +149,46 @@ class TileEntityNetController : TileEntity() {
             i++
         }
     }
+
+    val BG_TEXTURE: ResourceLocation = ResourceLocation(modid, "textures/gui/netcontroller.png")
+    var colorZone = 0
+    var phase:Double = 0.0
+    var module:Double = 0.0
+
+    //circle zone pointer
+    var ptrMoveX = 0
+    var ptrMoveY = 0
+
+    fun getColorZone(){
+
+        this.ptrMoveX = (this.module * cos(this.phase)).toInt()
+        this.ptrMoveY = (this.module * sin(this.phase)).toInt()
+
+        //relative to top left corner of the texture
+        val circleCenterX = 37
+        val circleCenterY = 41
+
+        val iStream: InputStream = Minecraft.getMinecraft().resourceManager.getResource(BG_TEXTURE).inputStream
+        val image: BufferedImage = ImageIO.read(iStream)
+        val texture: IntArray = image.raster.getPixel(circleCenterX + this.ptrMoveX, circleCenterY + this.ptrMoveY, IntArray(4))
+        val currentZone = arrayOf(texture[0], texture[1], texture[2])
+
+        //reference
+        val blueZone = arrayOf(113, 151, 220)
+        val redZone = arrayOf(197, 0, 37)
+
+        if(currentZone.contentEquals(blueZone)) {
+            //blue wave
+            this.colorZone = 1
+        }else if(currentZone.contentEquals(redZone)) {
+            //red wave
+            this.colorZone = 2
+        }else{
+            //grey colorZone
+            this.colorZone = 0
+        }
+
+    }
+
+
 }

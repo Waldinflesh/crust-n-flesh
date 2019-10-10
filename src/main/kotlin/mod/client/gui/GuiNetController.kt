@@ -7,32 +7,24 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
 
 import mod.common.Container.ContainerNetController
-import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.resources.I18n
-import net.minecraft.util.Timer
 import net.minecraft.util.text.TextComponentString
 
 
 class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiContainer(container){
 
-    var playerInv: InventoryPlayer
-    var container: ContainerNetController
+    val playerInv: InventoryPlayer = playerInv
+    val container: ContainerNetController = container as ContainerNetController
+    val netController = this.container.netController
     val BG_TEXTURE: ResourceLocation = ResourceLocation(mod.modid, "textures/gui/netcontroller.png")
 
-
-    var temp = 1
-    //wave movement
-    var frameCounter = 0    //move the wave every 5 frames
-    var cursor = 0
+    init{
+        this.netController.getColorZone()
+    }
 
     //GUI Buttons
     val RESCAN = 0
-
-    init{
-        this.playerInv = playerInv
-        this.container = container as ContainerNetController
-    }
 
     override fun initGui() {
         super.initGui()
@@ -47,8 +39,8 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
 
         //GuiButton parameters: (id, x, y, width, height, text)
         // x and y indicate button's top left corner
-        val rescanButtonX = centerX - buttonWidth/2
-        val rescanButtonY = centerY + 30 - buttonHeight/2
+        val rescanButtonX = centerX - buttonWidth/2 + 40
+        val rescanButtonY = centerY - buttonHeight/2
         this.buttonList.add(GuiButton(RESCAN, rescanButtonX, rescanButtonY, buttonWidth, buttonHeight, "Rescan"))
     }
 
@@ -58,30 +50,33 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
         this.renderHoveredToolTip(mouseX, mouseY)
     }
 
+    //wave movement
+    var frameCounter = 0    //move the wave every 5 frames
+    var cursor = 0
+
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
         mc.getTextureManager().bindTexture(BG_TEXTURE)
 
-        //top left
-        val x = (width - xSize)/2
-        val y = (height - ySize)/2
+        //top left corner
+        val guiCornerX = (width-xSize)/2
+        val guiCornerY = (height-ySize)/2
+
         //drawTexturedModalRect parameters: (x, y, textureTopLeftX, textureTopLeftY, textureWidth, textureHeight)
         //gui background
-        drawTexturedModalRect(x, y, 0, 0, 175, 198)
+        drawTexturedModalRect(guiCornerX, guiCornerY, 0, 0, 175, 198)
 
-        //circle pointer
-        drawTexturedModalRect(x + 39 - 2, y + 43 - 2, 179, 2, 5, 5)
+        this.netController.getColorZone()
 
-        if(temp == 0){
-            //blue wave
-            drawTexturedModalRect(x + 8, y + 79, 1 + cursor, 203, 81, 13)
-        }else{
-            //red wave
-            drawTexturedModalRect(x + 8, y + 79, cursor, 218, 81, 13)
+        when(this.netController.colorZone) {
+            1 -> drawTexturedModalRect(guiCornerX + 8, guiCornerY + 79, 1 + cursor, 203, 81, 13)
+            2 -> drawTexturedModalRect(guiCornerX + 8, guiCornerY + 79, cursor - 1, 218, 81, 13)
         }
 
+        //circle pointer
+        drawTexturedModalRect(guiCornerX + 37 + this.netController.ptrMoveX, guiCornerY + 41 + this.netController.ptrMoveY, 179, 2, 5, 5)
 
-
+        //wave progression
         if(this.frameCounter == 2) {
             this.frameCounter = 0
             if (this.cursor == 20) {
@@ -94,6 +89,7 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
         }
     }
 
+
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         val name = I18n.format(mod.common.Block.NetController.getUnlocalizedName() + ".name");
         //(string, x, y, color??)
@@ -102,9 +98,9 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
     }
 
     override fun actionPerformed(button: GuiButton) {
-        if(button.id == RESCAN){
+        if (button.id == RESCAN) {
             playerInv.player.sendMessage(TextComponentString("Rescanning network..."))
-            this.container.netController.rescan()
+            this.netController.rescan()
             playerInv.player.sendMessage(TextComponentString("Elements found: " + container.netController.machineList.size))
         }
     }
