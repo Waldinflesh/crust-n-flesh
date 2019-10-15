@@ -67,6 +67,7 @@ object AutoRegistry {
         event.getRegistry().register(ItemBlock(DualityPipe).setRegistryName(DualityPipe.getRegistryName()))
         event.getRegistry().register(ItemBlock(NetController).setRegistryName(NetController.getRegistryName()))
         event.getRegistry().register(ItemBlock(CreativeGenerator).setRegistryName(CreativeGenerator.getRegistryName()))
+        event.getRegistry().register(ItemBlock(Fleshcifuge).setRegistryName(Fleshcifuge.getRegistryName()))
     }
 
     @JvmStatic
@@ -77,9 +78,11 @@ object AutoRegistry {
         event.getRegistry().register(CrustPole)
         GameRegistry.registerTileEntity(TileEntityCrustPole::class.java, CrustPole.getRegistryName().toString());
         GameRegistry.registerTileEntity(TileEntityNetController::class.java, CrustPole.getRegistryName().toString());
+        GameRegistry.registerTileEntity(TileentityFleshcifuge::class.java, Fleshcifuge.getRegistryName().toString());
         event.getRegistry().register(DualityPipe)
         event.getRegistry().register(NetController)
         event.getRegistry().register(CreativeGenerator)
+        event.getRegistry().register(Fleshcifuge)
 
         //basic blocks
         event.getRegistry().register(BrownCrustOre)
@@ -110,5 +113,6 @@ object AutoRegistry {
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(NetController), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(CreativeGenerator), 0)
         CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(DualityPipe), 0)
+        CrustNFleshMod.proxy.registerItemRenderer(Item.getItemFromBlock(Fleshcifuge), 0)
     }
 }
