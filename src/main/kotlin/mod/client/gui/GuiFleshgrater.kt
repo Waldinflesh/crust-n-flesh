@@ -6,23 +6,19 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
 
-import mod.common.Container.ContainerFleshcifuge
-import net.minecraft.client.gui.Gui
-import net.minecraft.client.gui.GuiButton
+import mod.common.Container.ContainerFleshgrater
 import net.minecraft.client.resources.I18n
-import net.minecraft.util.Timer
-import net.minecraft.util.text.TextComponentString
 
 
 class GuiFleshgrater(container: Container, playerInv: InventoryPlayer): GuiContainer(container) {
 
     var playerInv: InventoryPlayer
-    var container: ContainerFleshcifuge
-    val BG_TEXTURE: ResourceLocation = ResourceLocation(mod.modid, "textures/gui/flesh-grater.png")
+    var container: ContainerFleshgrater
+    val BG_TEXTURE: ResourceLocation = ResourceLocation(mod.modid, "textures/gui/fleshgrater.png")
 
     init {
         this.playerInv = playerInv
-        this.container = container as ContainerFleshcifuge
+        this.container = container as ContainerFleshgrater
     }
 
     override fun initGui() {
@@ -52,9 +48,9 @@ class GuiFleshgrater(container: Container, playerInv: InventoryPlayer): GuiConta
         }
 
         override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-            val name = I18n.format(mod.common.Block.Fleshcifuge.unlocalizedName + ".name");
+            val name = I18n.format(mod.common.Block.Fleshgrater.unlocalizedName + ".name");
             //(string, x, y, color??)
             fontRenderer.drawString(name, 8, 6, 0x404040);
-            fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, 106, 0x404040);
+            fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, ySize - 94, 0x404040);
         }
 }

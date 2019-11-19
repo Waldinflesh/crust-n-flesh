@@ -20,45 +20,62 @@ import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.world.IBlockAccess
 import net.minecraft.block.state.IBlockState;
-import mod.common.energy.DualityGenerator;
-import net.minecraft.util.text.TextComponentString
-import net.minecraftforge.items.CapabilityItemHandler
-import net.minecraftforge.items.IItemHandler
-import net.minecraft.block.BlockContainer
-import net.minecraft.inventory.IInventory;
+import net.minecraft.block.BlockHorizontal
+import net.minecraft.block.properties.PropertyDirection
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.inventory.IInventory
 
-val Fleshcifuge: Block = object : BlockTileEntity<TileentityFleshcifuge>(Material.IRON) {
+val Fleshgrater: Block = object : BlockTileEntity<TileentityFleshgrater>(Material.IRON) {
+
 
     init {
-        setUnlocalizedName("Fleshcifuge")
-        setRegistryName("fleshcifuge")
+        setUnlocalizedName("Fleshgrater")
+        setRegistryName("fleshgrater")
         setCreativeTab(CrustTab)
 
         setHardness(1.5F)
+        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING,EnumFacing.NORTH))
     }
+
 
     override fun hasTileEntity(state: IBlockState): Boolean {
         return true
     }
 
-    override fun createTileEntity(world: World, state: IBlockState): TileentityFleshcifuge {
-        return TileentityFleshcifuge()
+    override fun createTileEntity(world: World, state: IBlockState): TileentityFleshgrater {
+        return TileentityFleshgrater()
     }
 
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if(!world.isRemote){
-        //        player.openGui(CrustNFleshMod, ModGuiHandler.NETCONTROLLER, world, pos.x, pos.y, pos.z)
             player.openGui(CrustNFleshMod, ModGuiHandler.FLESHGRATER, world, pos.x, pos.y, pos.z)
         }
 
         return true
     }
+
+    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+        return this.defaultState.withProperty(BlockHorizontal.FACING, placer.horizontalFacing.opposite)
+    }
+
+    override fun createBlockState(): BlockStateContainer {
+        return BlockStateContainer(this, BlockHorizontal.FACING)
+    }
+
+    override fun getStateFromMeta(meta: Int): IBlockState {
+        return this.defaultState.withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta))
+    }
+
+    override fun getMetaFromState(state: IBlockState): Int {
+        return state.getValue(BlockHorizontal.FACING).horizontalIndex and 1
+    }
+
 }
 
 /*
  * TODO: Add function to get the full spectrum of energy on the network.
  */
-class TileentityFleshcifuge : TileEntity(), ITickable, IInventory{
+class TileentityFleshgrater : TileEntity(), ITickable, IInventory{
     override fun setInventorySlotContents(slotIndex: Int, itemstack: ItemStack) {
         itemStacks[slotIndex] = itemstack;
         if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()) {  // isEmpty();  getStackSize()
@@ -119,7 +136,7 @@ class TileentityFleshcifuge : TileEntity(), ITickable, IInventory{
     }
 
     override fun getName(): String {
-        return Fleshcifuge.unlocalizedName
+        return Fleshgrater.unlocalizedName
     }
 
     override fun isEmpty(): Boolean {

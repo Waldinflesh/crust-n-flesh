@@ -16,7 +16,7 @@ public class ForgelinSetup implements IFMLCallHook {
 			loader.loadClass("net.shadowfacts.forgelin.KotlinAdapter");
 		} catch (ClassNotFoundException e) {
 			// this should never happen
-			throw new RuntimeException("Couldn't find Forgelin langague adapter, this shouldn't be happening", e);
+			throw new RuntimeException("Couldn't find Forgelin language adapter, this shouldn't be happening", e);
 		}
 	}
 
