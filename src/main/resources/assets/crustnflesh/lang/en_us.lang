@@ -7,6 +7,7 @@ tile.YellowCrustBlock.name=Yellow Crust Block
 tile.CrustPole.name=Crust Pole
 tile.NetController.name=Net Controller
 tile.DualityPipe.name=Duality Pipe
+tile.Fleshgrater.name=Flesh Grater
 
 tile.CreativeGenerator.name=Creative Generator
 

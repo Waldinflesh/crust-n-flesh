@@ -26,6 +26,11 @@ class GuiNetController(container: Container, playerInv: InventoryPlayer): GuiCon
     //GUI Buttons
     val RESCAN = 0
 
+    init {
+        this.playerInv = playerInv
+        this.container = container as ContainerNetController
+    }
+
     override fun initGui() {
         super.initGui()
 

@@ -1,0 +1,29 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "particle": "crustnflesh:blocks/fleshgrater_side",
+      "up": "crustnflesh:blocks/fleshgrater_top",
+      "north": "crustnflesh:blocks/fleshgrater_front_off",
+      "east": "crustnflesh:blocks/fleshgrater_side",
+      "south": "crustnflesh:blocks/fleshgrater_side",
+      "west": "crustnflesh:blocks/fleshgrater_side",
+      "down": "crustnflesh:blocks/fleshgrater_bottom"
+    }
+  },
+  "variants": {
+    "normal": {
+      "model": "cube_all"
+    },
+    "inventory": {
+      "model": "cube_all"
+    },
+    "facing": {
+      "north": { },
+      "east":  { "y": 90 },
+      "south": { "y": 180 },
+      "west":  { "y": 270 }
+    }
+  }
+}
