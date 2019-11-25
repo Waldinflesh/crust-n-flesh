@@ -110,7 +110,7 @@ val CrustPole: Block = object : BlockTileEntity<TileEntityCrustPole>(Material.RO
         return a
     }
 
-    override fun getMetaFromState(state: IBlockState?): Int {
+    override fun getMetaFromState(state: IBlockState): Int {
         var a = state!!.getValue(GrowthState)
         return a
     }

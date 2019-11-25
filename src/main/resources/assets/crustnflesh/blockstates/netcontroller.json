@@ -1,16 +1,29 @@
 {
-	"forge_marker": 1,
-	"defaults": {
-		"textures": {
-			"all": "crustnflesh:blocks/netcontroller"
-		}
-	},
-	"variants": {
-		"normal": {
-			"model": "cube_all"
-		},
-		"inventory": {
-			"model": "cube_all"
-		}
-	}
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "particle": "crustnflesh:blocks/netcontroller_east",
+      "up": "crustnflesh:blocks/netcontroller_up",
+      "north": "crustnflesh:blocks/netcontroller_north",
+      "east": "crustnflesh:blocks/netcontroller_east",
+      "south": "crustnflesh:blocks/netcontroller_south",
+      "west": "crustnflesh:blocks/netcontroller_west",
+      "down": "crustnflesh:blocks/netcontroller_down"
+    }
+  },
+  "variants": {
+    "normal": {
+      "model": "cube_all"
+    },
+    "inventory": {
+      "model": "cube_all"
+    },
+    "facing": {
+      "north": { },
+      "east":  { "y": 90 },
+      "south": { "y": 180 },
+      "west":  { "y": 270 }
+    }
+  }
 }

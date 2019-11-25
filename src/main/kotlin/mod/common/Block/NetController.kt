@@ -23,6 +23,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.block.state.IBlockState;
 import mod.common.energy.DualityGenerator
 import mod.modid
+import net.minecraft.block.BlockHorizontal
 import net.minecraft.client.Minecraft
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TextComponentString
@@ -43,6 +44,7 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
         setCreativeTab(CrustTab)
         setHardness(1.5F)
 
+        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING,EnumFacing.NORTH))
     }
 
     override fun hasTileEntity(state: IBlockState): Boolean {
@@ -63,6 +65,7 @@ val NetController: Block = object : BlockTileEntity<TileEntityNetController>(Mat
 
         return true
     }
+
 }
 
 
