@@ -3,7 +3,7 @@ package mod
 import mod.client.gui.GuiFleshgrater
 import mod.client.gui.GuiNetController
 import mod.common.Block.TileEntityNetController
-import mod.common.Block.TileentityFleshgrater
+import mod.common.Block.TileEntityFleshgrater
 import mod.common.Container.ContainerFleshgrater
 import mod.common.Container.ContainerNetController
 import net.minecraft.entity.player.EntityPlayer
@@ -21,7 +21,7 @@ object ModGuiHandler: IGuiHandler{
 
         when(ID){
             NETCONTROLLER -> return ContainerNetController(player.inventory, world.getTileEntity(BlockPos(x, y, z)) as TileEntityNetController)
-            FLESHGRATER -> return ContainerFleshgrater(player.inventory, world.getTileEntity(BlockPos(x, y, z)) as TileentityFleshgrater)
+            FLESHGRATER -> return ContainerFleshgrater(player.inventory, world.getTileEntity(BlockPos(x, y, z)) as TileEntityFleshgrater)
             else -> return null
         }
     }

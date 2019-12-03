@@ -9,10 +9,6 @@ import net.minecraft.block.Block
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.client.model.ModelLoader
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 
@@ -78,7 +74,7 @@ object AutoRegistry {
         event.getRegistry().register(CrustPole)
         GameRegistry.registerTileEntity(TileEntityCrustPole::class.java, CrustPole.getRegistryName().toString());
         GameRegistry.registerTileEntity(TileEntityNetController::class.java, CrustPole.getRegistryName().toString());
-        GameRegistry.registerTileEntity(TileentityFleshgrater::class.java, Fleshgrater.getRegistryName().toString());
+        GameRegistry.registerTileEntity(TileEntityFleshgrater::class.java, Fleshgrater.getRegistryName().toString());
         event.getRegistry().register(DualityPipe)
         event.getRegistry().register(NetController)
         event.getRegistry().register(CreativeGenerator)

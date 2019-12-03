@@ -6,26 +6,24 @@ import net.minecraft.block.Block
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.material.Material
 import mod.client.CrustTab
-import mod.common.energy.DualityMachine
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
-import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
-import net.minecraft.world.IBlockAccess
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.BlockHorizontal
-import net.minecraft.block.properties.PropertyDirection
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.inventory.IInventory
+import net.minecraft.inventory.InventoryHelper
+import net.minecraft.nbt.NBTTagList
+import net.minecraftforge.common.util.Constants
 
-val Fleshgrater: Block = object : BlockTileEntity<TileentityFleshgrater>(Material.IRON) {
+val Fleshgrater: Block = object : BlockTileEntity<TileEntityFleshgrater>(Material.IRON) {
 
 
     init {
@@ -42,8 +40,8 @@ val Fleshgrater: Block = object : BlockTileEntity<TileentityFleshgrater>(Materia
         return true
     }
 
-    override fun createTileEntity(world: World, state: IBlockState): TileentityFleshgrater {
-        return TileentityFleshgrater()
+    override fun createTileEntity(world: World, state: IBlockState): TileEntityFleshgrater {
+        return TileEntityFleshgrater()
     }
 
     override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -52,6 +50,14 @@ val Fleshgrater: Block = object : BlockTileEntity<TileentityFleshgrater>(Materia
         }
 
         return true
+    }
+
+    override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState){
+        val tileEntity =  worldIn.getTileEntity(pos)
+        if(tileEntity is TileEntityFleshgrater){
+            InventoryHelper.dropInventoryItems(worldIn, pos, tileEntity as TileEntityFleshgrater)
+        }
+        super.breakBlock(worldIn, pos, state)
     }
 
     override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
@@ -75,7 +81,7 @@ val Fleshgrater: Block = object : BlockTileEntity<TileentityFleshgrater>(Materia
 /*
  * TODO: Add function to get the full spectrum of energy on the network.
  */
-class TileentityFleshgrater : TileEntity(), ITickable, IInventory{
+class TileEntityFleshgrater : TileEntity(), ITickable, IInventory{
     override fun setInventorySlotContents(slotIndex: Int, itemstack: ItemStack) {
         itemStacks[slotIndex] = itemstack;
         if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()) {  // isEmpty();  getStackSize()
@@ -183,10 +189,30 @@ class TileentityFleshgrater : TileEntity(), ITickable, IInventory{
     }
 
     override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
-        return super.writeToNBT(compound)
+        super.writeToNBT(compound)
+        val allSlotsData = NBTTagList()
+        for(i in 0..this.itemStacks.size - 1) {
+            if (!this.itemStacks[i]!!.isEmpty){
+                val slotData = NBTTagCompound()
+                slotData.setByte("Slot", i.toByte())
+                this.itemStacks[i]!!.writeToNBT(slotData)
+                allSlotsData.appendTag(slotData)
+            }
+        }
+        compound.setTag("Items", allSlotsData)
+        return compound
     }
 
     override fun readFromNBT(compound: NBTTagCompound) {
         super.readFromNBT(compound)
+        val allSlotsData = compound.getTagList("Items", Constants.NBT.TAG_COMPOUND)
+        for(i in 0..allSlotsData.tagCount() - 1){
+            print("READING" + i)
+            val slotData = allSlotsData.getCompoundTagAt(i)
+            val slotNumber: Byte = slotData.getByte("Slot")
+            if(slotNumber in 0..this.itemStacks.size - 1){
+                this.itemStacks[slotNumber.toInt()] = ItemStack(slotData)
+            }
+        }
     }
 }
