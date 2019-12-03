@@ -215,4 +215,9 @@ class TileEntityFleshgrater : TileEntity(), ITickable, IInventory{
             }
         }
     }
+
+    //energy
+    val maxEnergy:Int = 10_000
+    var currentEnergy:Int = 5_000
+
 }

@@ -50,20 +50,23 @@ class ContainerFleshgrater(playerInv:InventoryPlayer, fleshgrater: TileEntityFle
         val sourceStack: ItemStack = sourceSlot.stack
         val sourceStackCopy: ItemStack = sourceStack.copy()
 
-        if(sourceStack.item == CrustyFleshlet){
-            if(sourceSlotIndex in 2..37){
-                if(!mergeItemStack(sourceStack, 0, 1, false)){
-                    return ItemStack.EMPTY
-                }
-            } else if (sourceSlotIndex in 0..1){
-                if(!mergeItemStack(sourceStack, 2, 37, true)){
+        if(sourceSlotIndex in 2..37){
+            if(sourceStack.item == CrustyFleshlet) {
+                if (!mergeItemStack(sourceStack, 0, 1, false)) {
                     return ItemStack.EMPTY
                 }
             } else {
-                print("Invalid slot index" + sourceSlotIndex)
                 return ItemStack.EMPTY
             }
+        } else if (sourceSlotIndex in 0..1){
+            if(!mergeItemStack(sourceStack, 2, 38, true)) {
+                return ItemStack.EMPTY
+            }
+        } else {
+            print("Invalid slot index" + sourceSlotIndex)
+            return ItemStack.EMPTY
         }
+
 
         if (sourceStack.getCount() == 0) {
             sourceSlot.putStack(ItemStack.EMPTY)
